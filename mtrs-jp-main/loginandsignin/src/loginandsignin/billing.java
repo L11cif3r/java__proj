@@ -12,6 +12,8 @@ import java.sql.*;
 import java.util.List;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+import loginandsignin.PaymentMethod;
+import javax.swing.JFrame;
 /**
  *
  * @author GOD
@@ -143,32 +145,19 @@ public class billing extends javax.swing.JFrame {
     jTextArea1.append("Time Slot: 7:00 PM\n\n");
     jTextArea1.append("Cost(Rs): "+ numSeats*50 +"\n");
 }
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-        // Insert the billing data into the database
-        String movie = jTextArea1.getText().split("\n")[0].split(": ")[1];
-        String seats = jTextArea1.getText().split("\n")[2].split(": ")[1];
-        String timeSlot = jTextArea1.getText().split("\n")[4].split(": ")[1];
-        String cost = jTextArea1.getText().split("\n")[6].split(": ")[1];
-
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/mtrs", "root", "8008");
-             PreparedStatement stmt = conn.prepareStatement("INSERT INTO billing (movie, seats, time_slot, cost) VALUES (?, ?, ?, ?)")) {
-            stmt.setString(1, movie);
-            stmt.setString(2, seats);
-            stmt.setString(3, timeSlot);
-            stmt.setString(4, cost);
-            stmt.executeUpdate();
-        } catch (SQLException e) {
-            // Handle the exception
-            e.printStackTrace();
-        }
-         JOptionPane.showMessageDialog(null, "Payment successful!" );
-         System.exit(0);
-
-    }
     
     /**
      * @param args the command line arguments
      */
+    
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
+    JFrame paymentFrame = new JFrame("Payment Method");
+    PaymentMethod paymentMethod = new PaymentMethod();
+    paymentFrame.pack();
+    paymentFrame.setVisible(true);
+}
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -195,6 +184,9 @@ public class billing extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
+        
+        
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new billing().setVisible(true);
